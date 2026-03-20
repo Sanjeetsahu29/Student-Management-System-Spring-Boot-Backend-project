@@ -1,0 +1,29 @@
+com.example.studentmanagement
+│
+├── controller
+│   └── StudentController.java
+│
+├── dto
+│   ├── StudentRequestDTO.java
+│   ├── StudentResponseDTO.java
+│   └── ApiError.java
+│
+├── entity
+│   └── Student.java
+│
+├── exception
+│   ├── StudentNotFoundException.java
+│   ├── DuplicateStudentException.java
+│   └── GlobalExceptionHandler.java
+│
+├── repository
+│   └── StudentRepository.java
+│
+├── service
+│   └── StudentService.java
+│
+├── service/impl
+│   └── StudentServiceImpl.java
+│
+└── config
+    └── ModelMapperConfig.java
