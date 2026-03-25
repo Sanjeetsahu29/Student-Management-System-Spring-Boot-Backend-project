@@ -1,0 +1,76 @@
+package com.example.studentmanagement.service.impl;
+
+import com.example.studentmanagement.dto.StudentRequestDTO;
+import com.example.studentmanagement.dto.StudentResponseDTO;
+import com.example.studentmanagement.entity.Student;
+import com.example.studentmanagement.exception.DuplicateStudentException;
+import com.example.studentmanagement.exception.StudentNotFoundException;
+import com.example.studentmanagement.repository.StudentRepository;
+import com.example.studentmanagement.service.StudentService;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class StudentServiceImpl implements StudentService {
+
+    private final StudentRepository studentRepository;
+    private final ModelMapper modelMapper;
+
+    @Override
+    public StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO) {
+        if (studentRepository.existsByEmail(studentRequestDTO.getEmail())) {
+            throw new DuplicateStudentException(studentRequestDTO.getEmail());
+        }
+
+        Student student = modelMapper.map(studentRequestDTO, Student.class);
+        Student savedStudent = studentRepository.save(student);
+
+        return modelMapper.map(savedStudent, StudentResponseDTO.class);
+    }
+
+    @Override
+    public StudentResponseDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+
+        return modelMapper.map(student, StudentResponseDTO.class);
+    }
+
+    @Override
+    public List<StudentResponseDTO> getAllStudents() {
+        return studentRepository.findAll()
+                .stream()
+                .map(student -> modelMapper.map(student, StudentResponseDTO.class))
+                .toList();
+    }
+
+    @Override
+    public StudentResponseDTO updateStudent(Long id, StudentRequestDTO studentRequestDTO) {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+
+        if (!existingStudent.getEmail().equals(studentRequestDTO.getEmail())
+                && studentRepository.existsByEmail(studentRequestDTO.getEmail())) {
+            throw new DuplicateStudentException(studentRequestDTO.getEmail());
+        }
+
+        modelMapper.map(studentRequestDTO, existingStudent);
+        existingStudent.setId(id);
+
+        Student updatedStudent = studentRepository.save(existingStudent);
+        return modelMapper.map(updatedStudent, StudentResponseDTO.class);
+    }
+
+    @Override
+    public void deleteStudent(Long id) {
+        if (!studentRepository.existsById(id)) {
+            throw new StudentNotFoundException(id);
+        }
+
+        studentRepository.deleteById(id);
+    }
+}
