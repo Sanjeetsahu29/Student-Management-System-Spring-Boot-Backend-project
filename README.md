@@ -42,4 +42,36 @@ Client (Postman / Frontend / Another Service)
 **The key architectural rule**<br>
 Entity objects never leave the Service layer. The Controller always receives and returns DTOs. This protects your database schema from being exposed in API responses and gives you freedom to evolve both independently.
 
+## Project Structure
+```
+com.example.studentmanagement
+│
+├── controller
+│   └── StudentController.java
+│
+├── dto
+│   ├── StudentRequestDTO.java
+│   ├── StudentResponseDTO.java
+│   └── ApiError.java
+│
+├── entity
+│   └── Student.java
+│
+├── exception
+│   ├── StudentNotFoundException.java
+│   ├── DuplicateStudentException.java
+│   └── GlobalExceptionHandler.java
+│
+├── repository
+│   └── StudentRepository.java
+│
+├── service
+│   └── StudentService.java
+│
+├── service/impl
+│   └── StudentServiceImpl.java
+│
+└── config
+    └── ModelMapperConfig.java
+```
 
