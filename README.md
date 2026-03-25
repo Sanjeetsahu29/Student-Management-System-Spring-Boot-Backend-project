@@ -39,3 +39,7 @@ Client (Postman / Frontend / Another Service)
 │    Database       │  ← H2 (in-memory for dev) / MySQL (production)
 └──────────────────┘
 ```
+**The key architectural rule**<br>
+Entity objects never leave the Service layer. The Controller always receives and returns DTOs. This protects your database schema from being exposed in API responses and gives you freedom to evolve both independently.
+
+
