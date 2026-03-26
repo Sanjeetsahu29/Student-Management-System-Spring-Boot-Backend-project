@@ -208,4 +208,17 @@ public class ModelMapperConfig {
 3. Mapping: It calls the destination's setter with the source's getter value.
 
 So modelMapper.map(requestDTO, Student.class) is equivalent to calling every student.setXxx(requestDTO.getXxx()) automatically.
+### Usage Pattern in Service
+```
+// Converting RequestDTO → Entity (for saving to DB)
+Student student = modelMapper.map(studentRequestDTO, Student.class);
+
+// Converting Entity → ResponseDTO (for returning to client)
+StudentResponseDTO responseDTO = modelMapper.map(savedStudent, StudentResponseDTO.class);
+
+// Converting a List of Entities → List of ResponseDTOs
+List<StudentResponseDTO> responseDTOs = students.stream()
+    .map(s -> modelMapper.map(s, StudentResponseDTO.class))
+    .collect(Collectors.toList());
+```
 
