@@ -180,3 +180,24 @@ public class StudentResponseDTO {
 ## ModelMapper Config
 ###  Why register ModelMapper as a Spring Bean?
 ModelMapper is a library object, not a Spring component. To use it with @Autowired/@RequiredArgsConstructor across the entire app, we must manually register it as a Spring-managed @Bean inside a @Configuration class. Spring's IoC container will then create ONE instance and inject it wherever needed.
+```
+package com.example.studentmanagement.config;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ModelMapperConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                   .setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+}
+```
+
