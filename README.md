@@ -111,3 +111,5 @@ public class Student {
     private Boolean active;
 }
 ```
+**Why NOT use int for id?**<br>
+Use Long (not int) for IDs. A Java int has a max of ~2 billion. A Long holds ~9.2 quintillion. Also, Long (object type) can be null, which helps distinguish "no ID yet" vs "ID is 0".
