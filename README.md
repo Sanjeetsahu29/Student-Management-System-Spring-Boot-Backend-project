@@ -120,7 +120,7 @@ Request DTO = shape of data the client sends (POST/PUT). It includes validation 
 Response DTO = shape of data you return. It may include computed fields or exclude sensitive ones.
 They are intentionally different because input requirements ≠ output requirements.
 
-StudentRequestDTO.java<br>
+### StudentRequestDTO.java
 This DTO validates incoming data before it even touches our service layer. If validation fails, Spring throws a MethodArgumentNotValidException — no business code runs.
 
 ```
@@ -155,4 +155,25 @@ public class StudentRequestDTO {
     private Boolean active;
 }
 ```
+### StudentResponseDTO.java
+Notice that this DTO has no validation annotations — it's only for outgoing data. We expose exactly what we want the client to see.
+```
+package com.example.studentmanagement.dto;
 
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class StudentResponseDTO {
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String department;
+    private Boolean active;
+}
+```
