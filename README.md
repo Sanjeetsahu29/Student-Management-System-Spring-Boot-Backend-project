@@ -79,3 +79,35 @@ An Entity is a Java class that mirrors a database table. JPA reads the annotatio
 
 **Why @Entity and @Table?**<br>
 @Entity tells JPA "this class is a DB table". @Table(name="students") names the table explicitly. Without it, JPA uses the class name — fine, but explicit naming is a best practice.
+```
+package com.example.studentmanagement.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "students", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String department;
+
+    private Boolean active;
+}
+```
