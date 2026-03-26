@@ -200,4 +200,12 @@ public class ModelMapperConfig {
     }
 }
 ```
+### How ModelMapper Works — Under the Hood
+
+💡 ModelMapper's 3-step process
+1. Introspection: It uses Java Reflection to scan both source and destination class fields.
+2. Matching: It matches fields by name (and optionally type) based on the strategy.
+3. Mapping: It calls the destination's setter with the source's getter value.
+
+So modelMapper.map(requestDTO, Student.class) is equivalent to calling every student.setXxx(requestDTO.getXxx()) automatically.
 
