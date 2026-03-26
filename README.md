@@ -74,4 +74,8 @@ com.example.studentmanagement
 └── config
     └── ModelMapperConfig.java
 ```
+## Entity Layer — Student.java
+An Entity is a Java class that mirrors a database table. JPA reads the annotations and maps the class fields to table columns. The Entity should only hold data — no business logic, no API-specific fields.
 
+**Why @Entity and @Table?**<br>
+@Entity tells JPA "this class is a DB table". @Table(name="students") names the table explicitly. Without it, JPA uses the class name — fine, but explicit naming is a best practice.
