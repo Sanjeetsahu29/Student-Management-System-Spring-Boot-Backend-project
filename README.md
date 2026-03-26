@@ -113,3 +113,13 @@ public class Student {
 ```
 **Why NOT use int for id?**<br>
 Use Long (not int) for IDs. A Java int has a max of ~2 billion. A Long holds ~9.2 quintillion. Also, Long (object type) can be null, which helps distinguish "no ID yet" vs "ID is 0".
+
+## DTO Layer — Request & Response
+**Why TWO DTOs?**<br>
+Request DTO = shape of data the client sends (POST/PUT). It includes validation rules.
+Response DTO = shape of data you return. It may include computed fields or exclude sensitive ones.
+They are intentionally different because input requirements ≠ output requirements.
+
+StudentRequestDTO.java<br>
+This DTO validates incoming data before it even touches our service layer. If validation fails, Spring throws a MethodArgumentNotValidException — no business code runs.
+
